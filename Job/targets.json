@@ -1,0 +1,545 @@
+[
+  {
+    "url": "https://www.stepstone.de/stellenangebote--Werkstudent-m-w-d-Softwareentwicklung-Dortmund--Mettenmeier-GmbH--13883329-inline.html",
+    "company": "Mettenmeier GmbH",
+    "job_title": "Werkstudent Softwareentwicklung",
+    "location": "Dortmund"
+  },
+  {
+    "url": "https://www.stepstone.de/stellenangebote--Vollzeit-Python-Entwickler-Muenchen--Kostal-GmbH-Co-KG--13749348-inline.html",
+    "company": "Kostal GmbH Co. KG",
+    "job_title": "Vollzeit Python Entwickler",
+    "location": "München"
+  },
+  {
+    "url": "https://www.stepstone.de/stellenangebote--Werkstudent-m-w-d-Data-Engineering-Berlin--SIGNAL-IDUNA-Gruppe--13866300-inline.html",
+    "company": "SIGNAL IDUNA Gruppe",
+    "job_title": "Werkstudent Data Engineering",
+    "location": "Berlin"
+  },
+  {
+    "url": "https://www.stepstone.de/stellenangebote--Vollzeit-Cpp-Robotics-ROS2-Hamburg--Volkswagen-Infotainment-GmbH--13950212-inline.html",
+    "company": "Volkswagen Infotainment GmbH",
+    "job_title": "Vollzeit C++ Robotics ROS2",
+    "location": "Hamburg"
+  },
+  {
+    "url": "https://www.stepstone.de/stellenangebote--Werkstudent-m-w-d-Computer-Vision-Stuttgart--adesso-SE--13949503-inline.html",
+    "company": "adesso SE",
+    "job_title": "Werkstudent Computer Vision",
+    "location": "Stuttgart"
+  },
+  {
+    "url": "https://www.stepstone.de/stellenangebote--Werkstudent-m-w-d-Softwareentwicklung-Dortmund--bikosigma-GmbH--13786847-inline.html",
+    "company": "bikosigma GmbH",
+    "job_title": "Werkstudent Softwareentwicklung",
+    "location": "Dortmund"
+  },
+  {
+    "url": "https://www.stepstone.de/stellenangebote--Junior-Softwareentwickler-m-w-d-Bochum--Ehrhardt-Partner-Group--12743992-inline.html",
+    "company": "Ehrhardt Partner Group",
+    "job_title": "Junior Softwareentwickler",
+    "location": "Bochum"
+  },
+  {
+    "url": "https://www.stepstone.de/stellenangebote--Werkstudent-m-w-d-RPA-Automatisierung-Dortmund--SIGNAL-IDUNA-Gruppe--13866301-inline.html",
+    "company": "SIGNAL IDUNA Gruppe",
+    "job_title": "Werkstudent RPA Automatisierung",
+    "location": "Dortmund"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/pvminc/forward-deployed-engineer-fde-grafenwohr-bavaria-447557",
+    "company": "Pvminc",
+    "job_title": "Forward Deployed Engineer (FDE)",
+    "location": "Grafenwohr, Bavaria",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/grafanalabs/senior-full-stack-engineer-experimentation-product-analytics-germany-remote-250355",
+    "company": "grafanalabs",
+    "job_title": "Senior Full Stack Engineer | Experimentation - Product Analytics | Germany | Remote",
+    "location": "Unbekannt",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/grafanalabs/senior-full-stack-engineer-databases-analytics-germany-remote-216267",
+    "company": "grafanalabs",
+    "job_title": "Senior Full Stack Engineer - Databases - Analytics | Germany | Remote",
+    "location": "Unbekannt",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/grafanalabs/major-account-executive-remote-germany-306145",
+    "company": "grafanalabs",
+    "job_title": "Major Account Executive | Remote | Germany",
+    "location": "Unbekannt",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/gitlab/remote-staff-forward-deployed-engineer-emea-244241",
+    "company": "gitlab",
+    "job_title": "Staff Forward Deployed Engineer, EMEA",
+    "location": "Remote",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/okta/large-enterprise-account-executive-auth0-251985",
+    "company": "okta",
+    "job_title": "Large Enterprise Account Executive Auth0",
+    "location": "Unbekannt",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.stellenwerk.de/dortmund/lagerarbeiter-mwd-teilzeit-oder-minijob-261112-279959",
+    "company": "Dein Job",
+    "job_title": "Lagerarbeiter (m/w/d) - Teilzeit | Minijob - Dortmund",
+    "location": "Dortmund",
+    "source": "Stellenwerk"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/algolia/commercial-account-executive-dach-334107",
+    "company": "Algolia",
+    "job_title": "Commercial Account Executive, DACH",
+    "location": "Unbekannt",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/the-exploration-company/ait-test-engineer-munich-148999",
+    "company": "The Exploration Company",
+    "job_title": "AIT Test Engineer",
+    "location": "Munich, Germany",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/the-exploration-company/ait-propulsion-engineer-munich-497189",
+    "company": "The Exploration Company",
+    "job_title": "AIT Propulsion Engineer",
+    "location": "Munich, Germany",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/almetra/technical-customer-success-manager-ai-manufacturing-enterprise-berlin-112411",
+    "company": "Almetra",
+    "job_title": "Technical Customer Success Manager (AI Manufacturing Enterprise)",
+    "location": "Berlin",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/roompricegenie/remote-head-of-ux-381333",
+    "company": "Roompricegenie",
+    "job_title": "Remote Head of UX (m/f/d)",
+    "location": "Remote Germany",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/integral-de/senior-finance-manager-berlin-269738",
+    "company": "Integral De",
+    "job_title": "Senior Finance Manager",
+    "location": "Berlin",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/peripass/account-executive-dach-hamburg-313143",
+    "company": "Peripass",
+    "job_title": "Account Executive DACH",
+    "location": "Hamburg, Schleswig-Holstein, Germany",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/werraenergie-gmbh/werkstudent-bad-salzungen-59348",
+    "company": "WerraEnergie GmbH",
+    "job_title": "Werkstudent (m/w/d)",
+    "location": "Bad Salzungen, Thüringen, Deutschland",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/werraenergie-gmbh/werkstudent-elektrotechnik-energietechnik-bad-salzungen-436143",
+    "company": "WerraEnergie GmbH",
+    "job_title": "Werkstudent Elektrotechnik / Energietechnik (m/w/d)",
+    "location": "Bad Salzungen, Thüringen, Deutschland",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/drevise/customer-success-manager-berlin-80844",
+    "company": "Drevise",
+    "job_title": "Customer Success Manager (m/w/d)",
+    "location": "Berlin",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/capco/senior-genai-engineer-382513",
+    "company": "capco",
+    "job_title": "(Senior) GenAI Engineer",
+    "location": "Unbekannt",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/capco/senior-consultant-payments-transformation-339902",
+    "company": "capco",
+    "job_title": "(Senior) Consultant* - Payments Transformation",
+    "location": "Unbekannt",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/lanesplanes/senior-teamlead-gmv-analytics-munchen-bavaria-470843",
+    "company": "Lanesplanes",
+    "job_title": "(Senior) Teamlead GMV Analytics(w/m/d)",
+    "location": "München, Bavaria",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/lanesplanes/senior-teamlead-finance-operations-munchen-bavaria-148613",
+    "company": "Lanesplanes",
+    "job_title": "(Senior) Teamlead Finance Operations (w/m/d)",
+    "location": "München, Bavaria",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/lanesplanes/senior-product-manager-munchen-bavaria-993",
+    "company": "Lanesplanes",
+    "job_title": "Senior Product Manager (w/m/d)",
+    "location": "München, Bavaria",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/ninjaone/solutions-engineer-italian-berlin-364527",
+    "company": "Ninjaone",
+    "job_title": "Solutions Engineer - Italian",
+    "location": "Berlin",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.finest-jobs.com/stellenanzeige/Werkstudent-C-Softwareentwicklung-D-1326743?cp=BA",
+    "company": "Materna Information & Communications SE",
+    "job_title": "Werkstudent C# Softwareentwicklung (m/w/d), Dortmund",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "12811-2358267-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/19041-44549200-113-S",
+    "company": "VDM Metals GmbH",
+    "job_title": "Werkstudent KI (m|w|d)",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "19041-44549200-113-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10000-1208579201-S",
+    "company": "Gustav Degener GmbH & Co.KG",
+    "job_title": "Werkstudent (m/w/d) KI, Digitalisierung & Prozessoptimierung gesucht!",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "10000-1208579201-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1003484964-S",
+    "company": "Open Grid Europe GmbH",
+    "job_title": "Werkstudent Digitalisierung & Automatisierung (m/w/d)",
+    "location": "Essen, Ruhr",
+    "source": "BA-API",
+    "ba_refnr": "10001-1003484964-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10000-1208340647-S",
+    "company": "Trovent Security GmbH",
+    "job_title": "Werkstudent - IT-Admin / DevOps-Engineer (m/w/d)",
+    "location": "Bochum",
+    "source": "BA-API",
+    "ba_refnr": "10000-1208340647-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/14774-BB-563757-12683-547-S",
+    "company": "Deichmann SE",
+    "job_title": "Werkstudent Datenbankentwicklung & Data Management (m/w/d)",
+    "location": "Essen, Ruhr",
+    "source": "BA-API",
+    "ba_refnr": "14774-BB-563757-12683-547-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1000588090-S",
+    "company": "Ideenkraftwerk GmbH",
+    "job_title": "Werkstudent (m/w/d) Webentwicklung gesucht: Mach mit uns die Ausbildung besser – Arbeite flexibel vo",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "10001-1000588090-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1003996784-S",
+    "company": "SIGNAL IDUNA Krankenversicherung a. G.",
+    "job_title": "Werkstudent (m/w/d) Anwendungsentwicklung",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "10001-1003996784-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/12265-443677_JB5285935-S",
+    "company": "FERCHAU GmbH Niederlassung Wuppertal",
+    "job_title": "Softwareentwickler (m/w/d)",
+    "location": "Wuppertal",
+    "source": "BA-API",
+    "ba_refnr": "12265-443677_JB5285935-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/18094-k60154.1340-S",
+    "company": "GfG Gesellschaft für Gerätebau mbH",
+    "job_title": "Embedded Softwareentwickler (m/w/d)",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "18094-k60154.1340-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10000-1205991953-S",
+    "company": "PaginaNet GmbH",
+    "job_title": "SOFTWARE ENTWICKLER (M/W/D)",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "10000-1205991953-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1003182297-S",
+    "company": "SIGNAL IDUNA Krankenversicherung a. G.",
+    "job_title": "Softwareentwickler (m/w/d) Mainframe & Java",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "10001-1003182297-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/12265-467158_JB5285948-S",
+    "company": "FERCHAU GmbH Niederlassung Dortmund",
+    "job_title": "Softwareentwickler C# (m/w/d)",
+    "location": "Bochum",
+    "source": "BA-API",
+    "ba_refnr": "12265-467158_JB5285948-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1003917521-S",
+    "company": "Röhrich & Partner Organisationsberatung GmbH",
+    "job_title": "Softwareentwickler Java (m/w/d)",
+    "location": "Bochum",
+    "source": "BA-API",
+    "ba_refnr": "10001-1003917521-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1003440783-S",
+    "company": "avivar experts GmbH",
+    "job_title": "Softwareentwickler (m/w/d) - Kziff. CL30AV",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "10001-1003440783-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1003461400-S",
+    "company": "epiNET GmbH",
+    "job_title": "Softwareentwickler (m/w/d)",
+    "location": "Bochum",
+    "source": "BA-API",
+    "ba_refnr": "10001-1003461400-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/12265-445258_JB5297709-S",
+    "company": "FERCHAU GmbH Vertriebsstützpunkt Oelde",
+    "job_title": "Softwareentwickler Embedded Systems (m/w/d)",
+    "location": "Soest, Westfalen",
+    "source": "BA-API",
+    "ba_refnr": "12265-445258_JB5297709-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/18094-k60154.1349-S",
+    "company": "GfG Gesellschaft für Gerätebau mbH",
+    "job_title": "Softwareentwickler C# (m/w/d)",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "18094-k60154.1349-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1002603336-S",
+    "company": "SMF GmbH",
+    "job_title": "Senior Softwareentwickler*in Fullstack Java (w/m/d)",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "10001-1002603336-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1002603311-S",
+    "company": "SMF GmbH",
+    "job_title": "Senior Softwareentwickler*in Fullstack C# (w/m/d)",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "10001-1002603311-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1003871544-S",
+    "company": "Lovion GmbH",
+    "job_title": "Senior Softwareentwickler*in (m/w/d) - C#",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "10001-1003871544-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1003615648-S",
+    "company": "TEDi GmbH & Co. KG",
+    "job_title": "Softwareentwickler .NET/C# (m/w/d)",
+    "location": "Dortmund",
+    "source": "BA-API",
+    "ba_refnr": "10001-1003615648-S"
+  },
+  {
+    "url": "https://www.interamt.de/koop/app/stelle?id=1508825",
+    "company": "Fernuniversität in Hagen",
+    "job_title": "Software-Entwickler für Lernsysteme / Moodle (w/m/d)",
+    "location": "Hagen, Westfalen",
+    "source": "BA-API",
+    "ba_refnr": "14089-01508825-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/12265-514639_JB5209534-S",
+    "company": "FERCHAU GmbH Vertriebsstützpunkt Oelde",
+    "job_title": "Embedded Software Entwickler (m/w/d)",
+    "location": "Soest, Westfalen",
+    "source": "BA-API",
+    "ba_refnr": "12265-514639_JB5209534-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/12457-1551744-1-S",
+    "company": "TARGOBANK AG",
+    "job_title": "Software Entwickler - Mainframe (w/m/d)",
+    "location": "Duisburg",
+    "source": "BA-API",
+    "ba_refnr": "12457-1551744-1-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/12362-TR-243243_588552LS-S",
+    "company": "Brunel GmbH NL Wuppertal",
+    "job_title": "Embedded Softwareentwickler (w/m/d)",
+    "location": "Wuppertal",
+    "source": "BA-API",
+    "ba_refnr": "12362-TR-243243_588552LS-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/12362-TR304533_872CS-S",
+    "company": "Brunel GmbH NL Essen",
+    "job_title": "Embedded Software Entwickler (w/m/d)",
+    "location": "Essen, Ruhr",
+    "source": "BA-API",
+    "ba_refnr": "12362-TR304533_872CS-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/12362-PR307111_5863CS-S",
+    "company": "Brunel GmbH NL Essen",
+    "job_title": "Java Entwickler / Softwareentwickler (m/w/d)",
+    "location": "Essen, Ruhr",
+    "source": "BA-API",
+    "ba_refnr": "12362-PR307111_5863CS-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/12362-PR-266710_588544LS-S",
+    "company": "Brunel GmbH NL Wuppertal",
+    "job_title": "Softwareentwickler CODESYS (w/m/d)",
+    "location": "Wuppertal",
+    "source": "BA-API",
+    "ba_refnr": "12362-PR-266710_588544LS-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1000273460-S",
+    "company": "grey engineering GmbH",
+    "job_title": "Embedded Softwareentwickler (m/w/d) elektronische Messgeräte",
+    "location": "Holzwickede",
+    "source": "BA-API",
+    "ba_refnr": "10001-1000273460-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1003411830-S",
+    "company": "avivar experts GmbH",
+    "job_title": "Softwareentwickler (m/w/d) - Kziff. CL20AV",
+    "location": "Essen, Ruhr",
+    "source": "BA-API",
+    "ba_refnr": "10001-1003411830-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/12362-TR306703_5657CS-S",
+    "company": "Brunel GmbH NL Essen",
+    "job_title": "Softwareentwickler Embedded Systems (w/m/d)",
+    "location": "Essen, Ruhr",
+    "source": "BA-API",
+    "ba_refnr": "12362-TR306703_5657CS-S"
+  },
+  {
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-1003950689-S",
+    "company": "LIDROTEC GmbH",
+    "job_title": "WIR SUCHEN VERSTÄRKUNG – Softwareentwickler (m/w/d)",
+    "location": "Bochum",
+    "source": "BA-API",
+    "ba_refnr": "10001-1003950689-S"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/ilias-vassiliou-team-headhunterdigital-recruiting-fur-digital-sales-it-ki-automation/java-entwickler-product-engineer-fur-ai-assisted-development-du-bringst-ai-coding-ins-team-dortmund-489360",
+    "company": "Ilias Vassiliou & Team / headhunter.digital / Recruiting für Digital, Sales, IT, KI, Automation",
+    "job_title": "Java Entwickler / Product Engineer für AI-Assisted Development → DU bringst AI-Coding ins Team *",
+    "location": "Dortmund",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/aventuras-ug/praktikum-vibe-coding-automatisierung-cologne-427467",
+    "company": "Aventuras UG",
+    "job_title": "Praktikum Vibe Coding & Automatisierung",
+    "location": "Cologne",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/rhymeq-technologies-gmbh/developer-community-lead-berlin-444293",
+    "company": "RhymeQ Technologies GmbH",
+    "job_title": "Developer Community Lead",
+    "location": "Berlin",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/adjoe/senior-ml-research-scientist-ai-generative-recommendation-berlin-431681",
+    "company": "adjoe",
+    "job_title": "Senior ML Research Scientist – AI & Generative Recommendation (f/m/d)",
+    "location": "Berlin",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/goegmbh/senior-software-engineer-typescript-go-berlin-berlin-287203",
+    "company": "Goegmbh",
+    "job_title": "Senior Software Engineer - Typescript & Go (m/f/x)",
+    "location": "Berlin, Berlin",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/finmidcom/remote-platform-engineer-34275",
+    "company": "Finmid.com",
+    "job_title": "Platform Engineer",
+    "location": "Berlin / Greece / Remote",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/angeheuert-gmbh-personalberatung/embedded-software-entwickler-c-rostock-147482",
+    "company": "ANGEHEUERT GmbH Personalberatung",
+    "job_title": "Embedded Software Entwickler (m/w/d) C++",
+    "location": "Rostock",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/flix/data-platform-engineer-berlin-328247",
+    "company": "Flix",
+    "job_title": "Data Platform Engineer (m/f/d)",
+    "location": "Berlin, Berlin, Germany",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/openai/applied-ai-engineer-startups-codex-munich-197432",
+    "company": "OpenAI",
+    "job_title": "Applied AI Engineer, Startups (Codex)",
+    "location": "Munich, Germany",
+    "source": "Arbeitnow"
+  },
+  {
+    "url": "https://www.arbeitnow.com/jobs/companies/black-semiconductor-gmbh/working-student-data-ai-aachen-356566",
+    "company": "Black Semiconductor GmbH",
+    "job_title": "Working Student – Data & AI  (f/m/d)",
+    "location": "Aachen, Germany",
+    "source": "Arbeitnow"
+  }
+]

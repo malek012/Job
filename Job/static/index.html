@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Applier - Control Center</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .glow-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.15); }
+    .glow-emerald { box-shadow: 0 0 20px rgba(16, 185, 129, 0.15); }
+    .glow-amber { box-shadow: 0 0 20px rgba(245, 158, 11, 0.15); }
+    .sidebar-item:hover { background-color: rgba(59, 130, 246, 0.1); }
+    .sidebar-item.active { background-color: rgba(59, 130, 246, 0.2); border-left: 4px solid #3b82f6; }
+    .log-line { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+    .tier-1-badge { background-color: #10b981; color: white; }
+    .tier-2-badge { background-color: #f59e0b; color: white; }
+    .status-pending { color: #f59e0b; }
+    .status-submitted { color: #10b981; }
+    .status-refused { color: #ef4444; }
+    .status-interview { color: #3b82f6; }
+    .status-offer { color: #22c55e; }
+    .status-approved { color: #34d399; }
+    .status-failed, .status-dropped { color: #ef4444; }
+    .status-skipped, .status-withdrawn { color: #94a3b8; }
+    .status-awaiting_approval, .status-needs_manual { color: #f59e0b; }
+    .status-accepted { color: #22c55e; }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+    .card-hover:hover { transform: translateY(-2px); }
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 60vh;
+      color: #94a3b8;
+    }
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body class="bg-[#0f172a] text-slate-100 h-screen overflow-hidden">
+  <!-- Sidebar -->
+  <div class="fixed inset-y-0 left-0 w-64 bg-[#0f172a] border-r border-[#334155] z-40 flex flex-col">
+    <div class="p-6">
+      <h1 class="text-xl font-bold text-white tracking-tight">Job Applier</h1>
+      <p class="text-xs text-slate-400 mt-1">Control Center</p>
+    </div>
+    <nav class="flex-1 overflow-y-auto p-4 space-y-1">
+      <button data-tab="control" id="tab-control" class="sidebar-item active w-full px-4 py-3 rounded-lg text-left text-blue-400 flex items-center gap-3">
+        <span>🎯</span> <span>Control Center</span>
+      </button>
+      <button data-tab="review" id="tab-review" class="sidebar-item w-full px-4 py-3 rounded-lg text-left text-slate-500 flex items-center gap-3">
+        <span>📄</span> <span>Review &amp; PDF Preview</span>
+        <span id="review-count" class="ml-auto text-xs bg-blue-600 text-white rounded-full px-2 hidden"></span>
+      </button>
+      <button data-tab="analytics" id="tab-analytics" class="sidebar-item w-full px-4 py-3 rounded-lg text-left text-slate-500 flex items-center gap-3">
+        <span>📊</span> <span>Application Tracker</span>
+        <span id="manual-count" class="ml-auto text-xs bg-amber-500 text-black rounded-full px-2 hidden"></span>
+      </button>
+    </nav>
+    <div class="p-4 border-t border-[#334155]">
+      <div class="flex items-center gap-2">
+        <div id="conn-dot" class="w-2 h-2 rounded-full bg-slate-500"></div>
+        <span id="conn-text" class="text-xs text-slate-400">Connecting…</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="ml-64 h-screen flex flex-col">
+    <header class="h-16 shrink-0 border-b border-[#334155] bg-[#0f172a]/80 flex items-center justify-between px-6">
+      <div class="flex items-center gap-4">
+        <span class="text-sm text-slate-300 font-medium" id="page-title">Control Center</span>
+        <span id="busy-badge" class="hidden text-xs bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-full px-3 py-1"></span>
+      </div>
+      <button id="refresh-btn" class="px-3 py-1.5 bg-[#334155] hover:bg-[#475569] text-slate-200 rounded-md text-xs font-medium transition-colors">Refresh</button>
+    </header>
+
+    <div id="attention-banner" class="hidden shrink-0 bg-amber-400 text-black px-6 py-3 text-sm font-semibold flex items-center gap-3">
+      <span>👉</span><div id="attention-text" class="flex-1"></div>
+    </div>
+    <div id="error-banner" class="hidden shrink-0 bg-red-900/50 border-b border-red-500 text-red-200 px-4 py-2 text-xs font-mono flex items-start gap-3 max-h-32 overflow-auto">
+      <span class="font-bold shrink-0">⚠ ERROR</span>
+      <div id="error-text" class="flex-1 whitespace-pre-wrap"></div>
+      <button id="error-close" class="shrink-0 text-red-200 hover:text-white">✕</button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-6">
+      <!-- Tab: Control Center -->
+      <div id="tab-control-content" class="tab-content space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-[#1e293b] border border-[#334155] rounded-xl p-5 glow-blue">
+            <div class="text-xs text-slate-400 uppercase tracking-wider mb-1">Total Discovered</div>
+            <div class="text-2xl font-bold text-slate-100" id="kpi-total">0</div>
+          </div>
+          <div class="bg-[#1e293b] border border-[#334155] rounded-xl p-5 glow-emerald">
+            <div class="text-xs text-slate-400 uppercase tracking-wider mb-1">Docs Ready</div>
+            <div class="text-2xl font-bold text-emerald-400" id="kpi-docs-ready">0</div>
+            <div class="text-xs text-red-400 mt-1 hidden" id="kpi-docs-missing"></div>
+          </div>
+          <div class="bg-[#1e293b] border border-[#334155] rounded-xl p-5 glow-amber">
+            <div class="text-xs text-slate-400 uppercase tracking-wider mb-1">Submitted</div>
+            <div class="text-2xl font-bold text-amber-400" id="kpi-submitted">0</div>
+            <div class="text-xs text-slate-400 mt-1" id="kpi-tier1"></div>
+          </div>
+          <div class="bg-[#1e293b] border border-[#334155] rounded-xl p-5 glow-blue">
+            <div class="text-xs text-slate-400 uppercase tracking-wider mb-1">Pending Review</div>
+            <div class="text-2xl font-bold text-blue-400" id="kpi-pending">0</div>
+            <div class="text-xs text-slate-400 mt-1" id="kpi-approved"></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <button data-action="discover" class="action-btn bg-blue-600 hover:bg-blue-500 text-white px-4 py-3 rounded-xl font-medium flex items-center gap-2 transition-all"><span>🔍</span> Discover Jobs</button>
+          <button data-action="generate" class="action-btn bg-blue-600 hover:bg-blue-500 text-white px-4 py-3 rounded-xl font-medium flex items-center gap-2 transition-all"><span>📄</span> Generate Docs</button>
+          <button data-action="execute" class="action-btn bg-blue-600 hover:bg-blue-500 text-white px-4 py-3 rounded-xl font-medium flex items-center gap-2 transition-all"><span>🚀</span> Execute Approved</button>
+          <button data-action="auto-cycle" class="action-btn bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 rounded-xl font-medium flex items-center gap-2 transition-all"><span>🔄</span> Auto Cycle (3×)</button>
+        </div>
+
+        <div class="bg-[#1e293b] border border-[#334155] rounded-xl p-4">
+          <h3 class="text-sm font-semibold text-slate-300 mb-3">Execute settings</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 text-sm">
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" class="setting mt-1" data-setting="assist">
+              <span><span class="font-medium">Assist mode</span><br><span class="text-xs text-slate-400">Visible browser. On a captcha or login it waits for you, then continues by itself. Logins are remembered.</span></span>
+            </label>
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" class="setting mt-1" data-setting="auto_submit">
+              <span><span class="font-medium">Auto-submit</span><br><span class="text-xs text-slate-400">Press the final submit button when the form is complete. Off: fill and stop.</span></span>
+            </label>
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" class="setting mt-1" data-setting="accept_privacy">
+              <span><span class="font-medium">Accept privacy consent</span><br><span class="text-xs text-slate-400">Tick required data-protection / terms checkboxes on application forms for me.</span></span>
+            </label>
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" class="setting mt-1" data-setting="auto_send_email">
+              <span><span class="font-medium">Auto-send e-mail applications</span><br><span class="text-xs text-slate-400" id="email-sender-note">When an employer takes applications by e-mail, send it with both PDFs right away.</span></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="bg-[#0f172a] border border-[#334155] rounded-xl p-4">
+          <h3 class="text-sm font-semibold text-slate-300 mb-3">Live Execution Log</h3>
+          <div class="h-72 bg-black border border-[#1e293b] rounded-md p-3 text-xs text-green-400 overflow-y-auto" id="log-output">
+            <div class="log-line text-slate-400">Connecting to server…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Review Queue -->
+      <div id="tab-review-content" class="tab-content hidden space-y-4">
+        <div class="flex justify-between items-center">
+          <span class="text-sm font-semibold text-slate-100">Review Queue <span class="text-slate-400 font-normal" id="review-summary"></span></span>
+          <div class="flex gap-2">
+            <button id="approve-selected" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs rounded-md">Approve Selected</button>
+            <button id="reject-selected" class="px-3 py-1 bg-red-600 hover:bg-red-500 text-white text-xs rounded-md">Reject Selected</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto bg-[#1e293b] border border-[#334155] rounded-xl">
+          <table class="w-full">
+            <thead>
+              <tr class="text-left text-xs text-slate-400 border-b border-[#334155]">
+                <th class="px-4 py-3 w-8"><input type="checkbox" id="select-all"></th>
+                <th class="px-4 py-3">Company</th>
+                <th class="px-4 py-3">Job Title</th>
+                <th class="px-4 py-3">Location</th>
+                <th class="px-4 py-3 text-center">Tier</th>
+                <th class="px-4 py-3 text-center">Score</th>
+                <th class="px-4 py-3">Documents</th>
+                <th class="px-4 py-3 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="review-table-body" class="text-sm text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab: Application Tracker -->
+      <div id="tab-analytics-content" class="tab-content hidden space-y-6">
+        <div class="flex items-center justify-between bg-[#1e293b] border border-[#334155] rounded-xl p-4">
+          <div class="text-sm"><span class="font-semibold">E-mail applications</span>
+            <span class="text-slate-400" id="email-ready-text"></span></div>
+          <button id="send-all-btn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm rounded-lg font-medium">📧 Send all ready e-mails</button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-[#1e293b] border border-[#334155] rounded-xl p-4">
+            <div class="text-xs text-slate-400 uppercase mb-3">Applications by Status</div>
+            <div id="status-chart" class="space-y-2"></div>
+          </div>
+          <div class="bg-[#1e293b] border border-[#334155] rounded-xl p-4">
+            <div class="text-xs text-slate-400 uppercase mb-3">Tier Distribution</div>
+            <div id="tier-chart" class="space-y-2"></div>
+          </div>
+        </div>
+        <div class="overflow-x-auto bg-[#1e293b] border border-[#334155] rounded-xl">
+          <table class="w-full">
+            <thead>
+              <tr class="text-left text-xs text-slate-400 border-b border-[#334155]">
+                <th class="px-4 py-3">Company</th>
+                <th class="px-4 py-3">Job Title</th>
+                <th class="px-4 py-3 text-center">Tier</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3">What happened</th>
+                <th class="px-4 py-3">Next step</th>
+              </tr>
+            </thead>
+            <tbody id="tracker-table-body" class="text-sm text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    'use strict';
+
+    // ── Error reporting (registered first so nothing is missed) ──────────────
+    function showError(msg) {
+      document.getElementById('error-text').textContent = msg;
+      document.getElementById('error-banner').classList.remove('hidden');
+      console.error(msg);
+    }
+    window.addEventListener('error', e => showError('JS Error: ' + e.message + ' (' + (e.filename || '') + ':' + e.lineno + ')'));
+    window.addEventListener('unhandledrejection', e => showError('Unhandled rejection: ' + (e.reason && e.reason.message || e.reason)));
+
+    // ── State ────────────────────────────────────────────────────────────────
+    const TITLES = { control: 'Control Center', review: 'Review & PDF Preview', analytics: 'Application Tracker' };
+    const EMPTY_METRICS = { total_discovered: 0, docs_ready: 0, docs_missing: 0, pending_review: 0, approved: 0, submitted: 0,
+                            tier1_count: 0, tier2_count: 0, status_breakdown: {} };
+    // What the person should do for each automation blocker
+    const NEXT_STEP = {
+      captcha: 'Turn on Assist mode and retry: solve the captcha in the window, the agent finishes the rest.',
+      bot_protection: 'Turn on Assist mode and retry: pass the site check in the window.',
+      login_required: 'Turn on Assist mode and retry: log in once in the window (it is remembered).',
+      required_fields_unfilled: 'Add the missing answers to application_answers.json (or enable privacy consent), then retry.',
+      email_application: 'E-mail with both PDFs is ready (Bewerbung.eml in the job folder).',
+      no_form: 'Open the posting and apply by hand; no web form was found.',
+      multi_step_form: 'Open the posting and finish the form by hand.',
+      no_submit_button: 'Open the posting and finish the form by hand.',
+      validation_errors: 'The site rejected a value; open the posting and check the form.',
+      submission_unconfirmed: 'Submit was pressed. Check your inbox for a confirmation before retrying.',
+      posting_unavailable: 'The posting no longer exists. Nothing to do.',
+      browser_unavailable: 'Install the browser: playwright install chromium (in web-ui\\venv).',
+    };
+    let currentTab = 'control';
+    let state = null;            // last /api/state payload
+    let online = false;
+    const selected = new Set();  // URLs ticked in the review queue
+    const $ = id => document.getElementById(id);
+
+    function esc(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, c =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    // ── API ──────────────────────────────────────────────────────────────────
+    async function api(path, body) {
+      const opts = body === undefined ? {} : {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) };
+      const res = await fetch(path, opts);
+      let data = null;
+      try { data = await res.json(); } catch (_) { /* non-JSON error body */ }
+      if (!res.ok) {
+        const detail = data && data.detail;
+        throw new Error(typeof detail === 'string' ? detail : (detail ? JSON.stringify(detail) : 'HTTP ' + res.status));
+      }
+      return data;
+    }
+
+    function setOnline(ok) {
+      online = ok;
+      $('conn-dot').className = 'w-2 h-2 rounded-full ' + (ok ? 'bg-green-500' : 'bg-red-500');
+      $('conn-text').className = 'text-xs ' + (ok ? 'text-green-400' : 'text-red-400');
+      $('conn-text').textContent = ok ? 'System Online' : 'Server Offline';
+    }
+
+    let fetching = false;
+    async function fetchState() {
+      if (fetching) return;            // never stack polls
+      fetching = true;
+      try {
+        state = await api('/api/state');
+        if (!online) setOnline(true);
+      } catch (e) {
+        if (online || state === null) addLocalLog('Cannot reach API server: ' + e.message);
+        setOnline(false);
+      } finally {
+        fetching = false;
+      }
+      render();
+    }
+
+    async function post(path, body) {
+      try { return await api(path, body); }
+      catch (e) { showError(e.message); return null; }
+      finally { fetchState(); }
+    }
+
+    async function runAction(action) {
+      const data = await post('/api/' + action, {});
+      if (data) addLocalLog(data.message || action + ' started');
+    }
+
+    async function decide(urls, decision) {
+      if (!urls.length) return;
+      const data = await post('/api/decision', { urls, decision });
+      if (!data) return;
+      urls.forEach(u => selected.delete(u));
+      if (data.errors && data.errors.length) showError(data.errors.join('\n'));
+    }
+
+    // ── Rendering ────────────────────────────────────────────────────────────
+    function switchTab(tabId) {
+      currentTab = tabId;
+      document.querySelectorAll('.sidebar-item').forEach(el => {
+        const active = el.dataset.tab === tabId;
+        el.classList.toggle('active', active);
+        el.classList.toggle('text-blue-400', active);
+        el.classList.toggle('text-slate-500', !active);
+      });
+      document.querySelectorAll('.tab-content').forEach(el =>
+        el.classList.toggle('hidden', el.id !== 'tab-' + tabId + '-content'));
+      $('page-title').textContent = TITLES[tabId] || '';
+      render();
+    }
+
+    function render() {
+      const s = state || {};
+      const m = Object.assign({}, EMPTY_METRICS, s.metrics || {});
+      const queue = s.review_queue || [];
+      const apps = s.applications || [];
+      const settings = s.settings || {};
+
+      $('kpi-total').textContent = m.total_discovered;
+      $('kpi-docs-ready').textContent = m.docs_ready;
+      $('kpi-submitted').textContent = m.submitted;
+      $('kpi-tier1').textContent = m.tier1_count + ' Tier 1 (Dortmund/NRW)';
+      $('kpi-pending').textContent = m.pending_review;
+      $('kpi-approved').textContent = m.approved + ' approved, waiting for Execute';
+      const missing = $('kpi-docs-missing');
+      missing.classList.toggle('hidden', !m.docs_missing);
+      missing.textContent = m.docs_missing + ' not ready (missing or broken PDFs)';
+
+      const rc = $('review-count');
+      rc.classList.toggle('hidden', !queue.length);
+      rc.textContent = queue.length;
+      const manual = (m.status_breakdown.needs_manual || 0) + (m.status_breakdown.awaiting_approval || 0);
+      $('manual-count').classList.toggle('hidden', !manual);
+      $('manual-count').textContent = manual;
+
+      const busy = s.busy || null;
+      $('busy-badge').classList.toggle('hidden', !busy);
+      $('busy-badge').textContent = busy ? '⏳ ' + busy + ' running…' : '';
+      document.querySelectorAll('.action-btn').forEach(b => { b.disabled = !!busy || !online; });
+      document.querySelectorAll('.setting').forEach(box => {
+        if (document.activeElement !== box) box.checked = !!settings[box.dataset.setting];
+        box.disabled = !online;
+      });
+
+      $('email-sender-note').textContent = s.email_sender
+        ? 'Sends from ' + s.email_sender + ' with both PDFs as soon as the address is known.'
+        : 'Not set up yet: add the Gmail app password to Job\\.env (see README).';
+      const ready = readyEmails();
+      const sa = s.send_all || {};
+      const sendBtn = $('send-all-btn');
+      sendBtn.disabled = !online || !s.email_sender || !ready.length || !!sa.running;
+      sendBtn.textContent = sa.running ? `📧 Sending… ${sa.done}/${sa.total}` : `📧 Send all ready e-mails (${ready.length})`;
+      $('email-ready-text').textContent = !s.email_sender ? ' · Gmail not set up in Job\\.env'
+        : ` · ${ready.length} ready to send from ${s.email_sender}`;
+      $('attention-banner').classList.toggle('hidden', !s.attention);
+      $('attention-text').textContent = s.attention || '';
+
+      if (s.log) {
+        const logEl = $('log-output');
+        const atBottom = logEl.scrollHeight - logEl.scrollTop - logEl.clientHeight < 40;
+        logEl.innerHTML = s.log.map(l => '<div class="log-line' + (l.includes('ACTION NEEDED') ? ' text-amber-300' : '') + '">' + esc(l) + '</div>').join('')
+          || '<div class="log-line text-slate-400">System ready. Click Discover to begin.</div>';
+        if (atBottom) logEl.scrollTop = logEl.scrollHeight;
+      }
+
+      if (currentTab === 'review') renderReviewQueue(queue);
+      if (currentTab === 'analytics') renderTracker(m, apps, s.status_labels || {});
+    }
+
+    function tierBadge(job) {
+      const cls = job.tier === 1 ? 'tier-1-badge' : job.tier === 2 ? 'tier-2-badge' : 'bg-slate-600 text-white';
+      return '<span class="' + cls + ' text-xs px-2 py-1 rounded whitespace-nowrap">Tier ' + esc(job.tier) + '</span>';
+    }
+
+    function docLinks(job) {
+      if (!job.docs_ready) return '<span class="text-xs text-red-400">' + esc(job.doc_problem || 'PDFs missing') + '</span>';
+      return '<a href="' + esc(encodeURI(job.cv_url)) + '" target="_blank" rel="noopener" class="text-xs text-blue-400 hover:underline">CV</a>'
+        + ' · <a href="' + esc(encodeURI(job.letter_url)) + '" target="_blank" rel="noopener" class="text-xs text-blue-400 hover:underline">Cover Letter</a>';
+    }
+
+    function renderReviewQueue(jobs) {
+      const tbody = $('review-table-body');
+      const live = new Set(jobs.map(j => j.url));
+      [...selected].forEach(u => { if (!live.has(u)) selected.delete(u); });
+      $('review-summary').textContent = '(' + jobs.length + ')';
+      if (!jobs.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-8 text-center text-slate-400">No applications waiting for review.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = jobs.map((job, i) => `
+        <tr class="border-b border-[#334155] hover:bg-[#334155]/50">
+          <td class="px-4 py-3"><input type="checkbox" class="row-check" data-i="${i}" ${selected.has(job.url) ? 'checked' : ''}></td>
+          <td class="px-4 py-3">${esc(job.company)}</td>
+          <td class="px-4 py-3"><a href="${esc(job.url)}" target="_blank" rel="noopener" class="hover:underline">${esc(job.job_title)}</a></td>
+          <td class="px-4 py-3">${esc(job.location)}</td>
+          <td class="px-4 py-3 text-center">${tierBadge(job)}</td>
+          <td class="px-4 py-3 text-center">${esc(job.match_score)}</td>
+          <td class="px-4 py-3">${docLinks(job)}</td>
+          <td class="px-4 py-3 text-center whitespace-nowrap">
+            <button data-decision="approve" data-i="${i}" ${job.docs_ready ? '' : 'disabled'} class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs rounded-md">Approve</button>
+            <button data-decision="reject" data-i="${i}" class="px-3 py-1 bg-red-600 hover:bg-red-500 text-white text-xs rounded-md ml-1">Reject</button>
+          </td>
+        </tr>`).join('');
+      $('select-all').checked = jobs.every(j => selected.has(j.url));
+    }
+
+    function bar(label, count, max, color) {
+      const pct = max > 0 ? Math.round(count / max * 100) : 0;
+      return `<div class="flex items-center gap-3">
+          <span class="text-xs w-44 truncate">${esc(label)}</span>
+          <div class="flex-1 h-2 bg-[#334155] rounded"><div class="h-full rounded ${color}" style="width:${pct}%"></div></div>
+          <span class="text-xs font-mono w-8 text-right">${esc(count)}</span>
+        </div>`;
+    }
+
+    function nextStep(a, i) {
+      const retry = `<button data-retry="${i}" class="mt-1 px-2 py-0.5 bg-blue-600 hover:bg-blue-500 text-white text-xs rounded">Retry</button>`;
+      if (a.status === 'awaiting_approval') return 'Form can be filled. Turn on Auto-submit (or Assist mode to press submit yourself), then retry.<br>' + retry;
+      if (a.status === 'failed') return 'Technical error. Retry once; if it repeats, check the log.<br>' + retry;
+      if (a.status !== 'needs_manual') return '';
+      if (a.blocker === 'email_application' && !a.email_sent_at) {
+        const send = (state && state.email_sender)
+          ? `<button data-send="${i}" class="mt-1 px-2 py-0.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs rounded">Send e-mail now</button>`
+          : '<span class="text-amber-300">Set up Gmail in Job\\.env to send from here.</span>';
+        return esc(NEXT_STEP.email_application) + '<br><span class="text-slate-300">' + esc(a.apply_email) + '</span><br>' + send;
+      }
+      const tip = esc(NEXT_STEP[a.blocker] || 'Open the posting and apply by hand.');
+      const retryable = ['captcha', 'bot_protection', 'login_required', 'required_fields_unfilled', 'browser_unavailable'].includes(a.blocker);
+      return tip + (a.apply_email ? '<br><span class="text-slate-300">' + esc(a.apply_email) + '</span>' : '') + (retryable ? '<br>' + retry : '');
+    }
+
+    function renderTracker(m, apps, labels) {
+      const statuses = Object.entries(m.status_breakdown || {}).sort((a, b) => b[1] - a[1]);
+      const maxStatus = Math.max(0, ...statuses.map(s => s[1]));
+      $('status-chart').innerHTML = statuses.length
+        ? statuses.map(([st, n]) => bar(labels[st] || st, n, maxStatus, 'bg-blue-500')).join('')
+        : '<div class="text-xs text-slate-500">No applications yet.</div>';
+      const maxTier = Math.max(m.tier1_count, m.tier2_count);
+      $('tier-chart').innerHTML = bar('Tier 1 (Dortmund/NRW)', m.tier1_count, maxTier, 'bg-emerald-500')
+        + bar('Tier 2 (All Germany)', m.tier2_count, maxTier, 'bg-amber-500');
+
+      const tbody = $('tracker-table-body');
+      if (tbody.contains(document.activeElement)) return;   // don't rebuild under an open dropdown
+      if (!apps.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-slate-400">No applications yet.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = apps.map((a, i) => `
+        <tr class="border-b border-[#334155] hover:bg-[#334155]/50 align-top">
+          <td class="px-4 py-3">${esc(a.company)}<div class="text-xs text-slate-500">${esc(a.location)}</div></td>
+          <td class="px-4 py-3"><a href="${esc(a.url)}" target="_blank" rel="noopener" class="hover:underline">${esc(a.job_title)}</a></td>
+          <td class="px-4 py-3 text-center">${tierBadge(a)}</td>
+          <td class="px-4 py-3">
+            <select data-i="${i}" class="status-select status-${esc(a.status)} bg-[#0f172a] border border-[#334155] rounded px-2 py-1 text-xs">
+              ${Object.entries(labels).map(([k, v]) => `<option value="${esc(k)}" ${k === a.status ? 'selected' : ''}>${esc(v)}</option>`).join('')}
+              ${labels[a.status] ? '' : `<option selected value="${esc(a.status)}">${esc(a.status)}</option>`}
+            </select>
+            <div class="text-xs text-slate-500 mt-1 whitespace-nowrap">${esc(a.status_updated_at)}</div>
+          </td>
+          <td class="px-4 py-3 text-xs text-slate-400 max-w-md">${esc(a.note)}</td>
+          <td class="px-4 py-3 text-xs text-slate-300 max-w-xs">${nextStep(a, i)}</td>
+        </tr>`).join('');
+    }
+
+    function readyEmails() {
+      return ((state && state.applications) || []).filter(a =>
+        a.status === 'needs_manual' && a.blocker === 'email_application' && a.apply_email && !a.email_sent_at);
+    }
+
+    function addLocalLog(msg) {
+      const logEl = $('log-output');
+      const line = document.createElement('div');
+      line.className = 'log-line text-slate-400';
+      line.textContent = '[' + new Date().toLocaleTimeString('de-DE') + '] ' + msg;
+      logEl.appendChild(line);
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    // ── Event wiring (delegated; no inline handlers, no URLs inside HTML attributes) ──
+    document.querySelectorAll('.sidebar-item').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+    document.querySelectorAll('.action-btn').forEach(b => b.addEventListener('click', () => runAction(b.dataset.action)));
+    document.querySelectorAll('.setting').forEach(box => box.addEventListener('change', () => {
+      post('/api/settings', { [box.dataset.setting]: box.checked });
+      box.blur();
+    }));
+    $('refresh-btn').addEventListener('click', fetchState);
+    $('send-all-btn').addEventListener('click', () => {
+      const ready = readyEmails();
+      if (!ready.length) return;
+      const list = ready.map(a => '• ' + a.company + ' → ' + a.apply_email).join('\n');
+      if (!confirm('Send ' + ready.length + ' application e-mail(s) with CV and cover letter from ' +
+                   (state && state.email_sender) + '?\n\n' + list)) return;
+      post('/api/send-email-all', {}).then(d => { if (d) addLocalLog(d.message); });
+    });
+    $('error-close').addEventListener('click', () => $('error-banner').classList.add('hidden'));
+
+    const queueJob = i => ((state && state.review_queue) || [])[Number(i)];
+    const trackedJob = i => ((state && state.applications) || [])[Number(i)];
+    $('review-table-body').addEventListener('click', e => {
+      const btn = e.target.closest('button[data-decision]');
+      if (!btn) return;
+      const job = queueJob(btn.dataset.i);
+      if (job) decide([job.url], btn.dataset.decision);
+    });
+    $('review-table-body').addEventListener('change', e => {
+      if (!e.target.classList.contains('row-check')) return;
+      const job = queueJob(e.target.dataset.i);
+      if (!job) return;
+      if (e.target.checked) selected.add(job.url); else selected.delete(job.url);
+    });
+    $('select-all').addEventListener('change', e => {
+      ((state && state.review_queue) || []).forEach(j => e.target.checked ? selected.add(j.url) : selected.delete(j.url));
+      render();
+    });
+    $('approve-selected').addEventListener('click', () => decide([...selected], 'approve'));
+    $('reject-selected').addEventListener('click', () => decide([...selected], 'reject'));
+    $('tracker-table-body').addEventListener('change', e => {
+      if (!e.target.classList.contains('status-select')) return;
+      const app = trackedJob(e.target.dataset.i);
+      e.target.blur();
+      if (app) post('/api/status', { url: app.url, status: e.target.value });
+    });
+    $('tracker-table-body').addEventListener('click', e => {
+      const send = e.target.closest('button[data-send]');
+      const target = send && trackedJob(send.dataset.send);
+      if (target && confirm('Send the application e-mail with both PDFs to ' + target.apply_email + ' now?')) {
+        send.disabled = true;
+        post('/api/send-email', { url: target.url }).then(d => { if (d) addLocalLog('Sent to ' + d.to); });
+        return;
+      }
+      const btn = e.target.closest('button[data-retry]');
+      const app = btn && trackedJob(btn.dataset.retry);
+      if (app) post('/api/status', { url: app.url, status: 'approved', note: 'retry' });   // back into the Execute queue
+    });
+
+    // ── Start ────────────────────────────────────────────────────────────────
+    fetchState();
+    setInterval(fetchState, 5000);
+  </script>
+</body>
+</html>

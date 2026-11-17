@@ -1,0 +1,13 @@
+{
+  "summary": "B.Sc. Informatik abgeschlossen (TU Dortmund 2026), Master angestrebt. Fundiertes Profil in Computer Vision, Machine Learning und Softwareentwicklung.",
+  "sopra_bullet_1": "Entwicklung einer Kotlin-Anwendung zur Modellierung der Spielregellogik für ein 2x3-Rastersystem (6 Karten) inklusive Hotseat-Modus und automatisierter Test-Decks.",
+  "sopra_bullet_2": "Agile Umsetzung (Scrum) einer verteilten Multiplayer-Architektur via BGW-Net mit Fokus auf State-Serialization, Undo/Redo-Mechanismen und Bot-Turnier-Integration.",
+  "tutor_bullet_1": "Vermittlung hardwarenaher Informatikgrundlagen an Bachelorstudierende",
+  "tutor_bullet_2": "Eigenverantwortliche Leitung wöchentlicher Übungsgruppen und individuelle Betreuung",
+  "thesis_bullet_1": "Entwicklung einer KI-Pipeline zur Erkennung und zum Tracking von Kleinwasserfahrzeugen mit ROS 2, Python und Docker",
+  "thesis_bullet_2": "Integration moderner Segmentierungsverfahren in Hafensicherheitsarchitekturen für ein robustes Echtzeitsystem",
+  "formula_bullet_1": "Entwicklung und hardwarenahes Testing von Batteriesystemen unter Einsatz von C++, MATLAB und Python",
+  "formula_bullet_2": "Systemerweiterung durch API-Anbindung und Implementierung interaktiver Funktionen",
+  "birdclef_bullet_1": "Leitung von Datenaufbereitung und Modellevaluation zur Klassifikation von Biodiversitäts-Audiodaten",
+  "birdclef_bullet_2": "Höchste Bewertung im Kurs (Score 0,87) durch gezielte Optimierung der ML-Pipeline"
+}

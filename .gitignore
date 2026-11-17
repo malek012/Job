@@ -1,0 +1,65 @@
+# ============================================================================
+# Root .gitignore — Job Applier workspace
+# Secures .env files (API keys) at repo root and under Job/
+# ============================================================================
+
+# Environment / secret files (API keys must never be committed)
+.env
+.env.*
+!.env.example
+Job/.env
+Job/.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.python-version
+.pdm.toml
+.pdm-python
+.pdm-build/
+__pypackages__/
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+failed_jobs.log
+
+# Job Applier runtime artifacts (PDFs, outputs, caches)
+*.pdf
+*.tex
+*.aux
+*.out
+Job/_applications/
+Job/job_analysis/
+*.tmp
+
+# MCP / config
+opencode.json
+.config.pkl
+
+# Job Applier local state
+Job/_browser_profile/
+Job/settings.json
+Job/_backup_*/
+
+# Archive and caches (added 2026-11-17)
+_archive/
+.pytest_cache/
