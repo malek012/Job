@@ -817,10 +817,10 @@
   "https://www.arbeitsagentur.de/jobsuche/jobdetail/12362-PR307111_5863CS-S": {
     "processed_at": "2026-11-16",
     "status": "success",
-    "application_status": "approved",
-    "application_status_label": "Approved",
-    "status_updated_at": "2026-11-16 02:35:29",
-    "status_source": "human_approve_batch",
+    "application_status": "needs_manual",
+    "application_status_label": "Needs Manual",
+    "status_updated_at": "2026-11-18 01:14:34",
+    "status_source": "browser_agent",
     "company": "Brunel GmbH Nl Essen",
     "job_title": "Java Entwickler / Softwareentwickler (m/w/d)",
     "location": "Essen, Ruhr",
@@ -834,7 +834,10 @@
     "cv_exists": true,
     "letter_exists": true,
     "job_dir": "D:\\Users1\\malek\\Desktop\\Personal\\Kai\\Projects\\Job_applier\\Job\\_applications\\2026-11-16_Brunel_GmbH_Nl_Essen_Java_Entwickler___So_a29129",
-    "folder_name": "2026-11-16_Brunel_GmbH_Nl_Essen_Java_Entwickler___So_a29129"
+    "folder_name": "2026-11-16_Brunel_GmbH_Nl_Essen_Java_Entwickler___So_a29129",
+    "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/12362-PR307111_5863CS-S",
+    "submission_note": "Complex form detected - manual intervention required: no application form found (needs name/e-mail fields plus a document upload or a next button; saw fields=none, uploads=0)",
+    "automation_blocker": "no_form"
   },
   "https://www.arbeitsagentur.de/jobsuche/jobdetail/12362-TR306703_5657CS-S": {
     "processed_at": "2026-11-16",

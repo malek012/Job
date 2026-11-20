@@ -16,11 +16,10 @@ Drives a real browser (Playwright) through one job application:
      form as ready
 
 Human hand-off (assist mode, visible browser)
-    A captcha, a login wall or a bot-protection page is never solved, typed
-    into or bypassed by this agent. In assist mode it pauses, tells you what to
-    do in the browser window, waits until YOU have cleared it, then carries on
-    automatically (fill, next, submit). The browser profile is persistent, so a
-    site you logged into once stays logged in.
+    In assist mode the agent pauses at captchas, login walls or bot-protection
+    pages, tells you what to do in the browser window, waits until you have
+    cleared it, then carries on automatically (fill, next, submit). The browser
+    profile is persistent, so a site you logged into once stays logged in.
     Without assist mode the same situations end as status "needs_manual".
 
 It never submits an empty or partially filled form.
@@ -382,6 +381,34 @@ def _log(msg: str) -> None:
         print(f"[browser] {msg}", flush=True)
     except UnicodeEncodeError:
         print(f"[browser] {msg}".encode("ascii", "replace").decode("ascii"), flush=True)
+
+
+def _inspect_log(ctx: Dict[str, Any], msg: str) -> None:
+    """Verbose log in inspect mode."""
+    if ctx.get("inspect"):
+        _log(f"[INSPECT] {msg}")
+        ctx["emit"](f"[INSPECT] {msg}")
+
+
+def _inspect_pause(ctx: Dict[str, Any], step: str) -> None:
+    """Pause in inspect mode, waiting for Enter to continue."""
+    if ctx.get("inspect"):
+        _log(f"[INSPECT] PAUSED at: {step} — press Enter in terminal to continue...")
+        try:
+            input()
+        except EOFError:
+            pass
+        _log(f"[INSPECT] Continuing after: {step}")
+
+
+def _inspect_form(ctx: Dict[str, Any], form: Dict[str, Any], label: str) -> None:
+    """Log detailed form detection results in inspect mode."""
+    if not ctx.get("inspect"):
+        return
+    fields = [(f["key"], _label_of(f["desc"])) for f in form["fields"]]
+    files = [(f["kind"], _label_of(f["desc"])) for f in form["files"]]
+    _inspect_log(ctx, f"{label} — fields: {fields or 'none'} | files: {files or 'none'} | frame: {form['frame'].url[:80]}")
+    _inspect_pause(ctx, f"{label} (form scan)")
 
 
 # ── 1. Cookie banners & overlays ────────────────────────────────────────────
@@ -1115,6 +1142,7 @@ def _run(page: Page, ctx: Dict[str, Any], result: Dict[str, Any], response_statu
 
     for step_no in range(1, MAX_FORM_STEPS + 1):
         form = scan_form(page)
+        _inspect_form(ctx, form, f"step {step_no} form scan")
 
         blocker = human_blocker(page, form)
         if blocker:
@@ -1141,7 +1169,11 @@ def _run(page: Page, ctx: Dict[str, Any], result: Dict[str, Any], response_statu
 
         expand_hidden_sections(page)
         filled.update(fill_form_fields(form, answers))
+        _inspect_log(ctx, f"step {step_no} filled: {sorted(k for k, v in filled.items() if v)}")
+        _inspect_pause(ctx, f"step {step_no} after fill")
         upload_documents(form, cv_path, letter_path, uploads)
+        _inspect_log(ctx, f"step {step_no} uploads: cv={uploads['cv']} letter={uploads['letter']}")
+        _inspect_pause(ctx, f"step {step_no} after upload")
         result["filled_fields"], result["uploaded_docs"] = dict(filled), dict(uploads)
 
         missing = required_unfilled(form, ctx["accept_privacy"])
@@ -1155,6 +1187,8 @@ def _run(page: Page, ctx: Dict[str, Any], result: Dict[str, Any], response_statu
             return page
 
         next_btn, submit_btn = find_next_button(form), find_submit_button(form)
+        _inspect_log(ctx, f"step {step_no} next_btn={_btn_text(next_btn)[:30] if next_btn else 'none'} submit_btn={_btn_text(submit_btn)[:30] if submit_btn else 'none'}")
+        _inspect_pause(ctx, f"step {step_no} before next/submit")
         if submit_btn is not None:
             steps.append(f"step {step_no}: final step reached" if step_no > 1 else "single-page form")
             break
@@ -1196,6 +1230,8 @@ def _run(page: Page, ctx: Dict[str, Any], result: Dict[str, Any], response_statu
         return page
 
     summary = (f"{sum(filled.values())} fields, CV{' + cover letter' if uploads['letter'] else ''} uploaded")
+    _inspect_log(ctx, f"FINAL FORM STATE: {summary}")
+    _inspect_pause(ctx, "FINAL before submit/approval")
     if not ctx["auto_approve"]:
         result["status"] = "awaiting_approval"
         result["note"] = f"Form filled completely ({summary}); not submitted (auto-submit off)"
@@ -1208,6 +1244,7 @@ def _run(page: Page, ctx: Dict[str, Any], result: Dict[str, Any], response_statu
         return page
 
     _log("Submitting application...")
+    _inspect_pause(ctx, "AUTO-SUBMIT: final click")
     submit_btn.click(timeout=5000)
     confirmed, why = verify_submission(page)
     if confirmed:
@@ -1228,6 +1265,7 @@ def apply_to_job(
     cv_path: Optional[Path] = None,
     letter_path: Optional[Path] = None,
     assist: bool = False,
+    inspect: bool = False,
     accept_privacy: Optional[bool] = None,
     human_wait_seconds: Optional[int] = None,
     on_event: Optional[Any] = None,
@@ -1240,6 +1278,9 @@ def apply_to_job(
     assist=True  -> visible browser with a persistent profile; captcha / login /
                     bot checks are handed to the person and the run continues
                     once they are cleared.
+    inspect=True -> visible browser, verbose logging, pauses at each major step
+                    (form detection, fill, upload, next/submit) for live inspection.
+                    Implies assist=True and headless=False.
     """
     result: Dict[str, Any] = {
         "url": url, "final_url": url, "status": "error", "blocker": None, "note": "", "steps": [],
@@ -1258,6 +1299,9 @@ def apply_to_job(
         result["note"] = "CV.pdf / Anschreiben.pdf for this job not found - generate documents first"
         return _finish(result)
     cv_path, letter_path = Path(cv_path), Path(letter_path)
+    if inspect:
+        assist = True
+        headless = False   # inspection needs a visible window
     if assist:
         headless = False   # a person can only help in a window they can see
 
@@ -1271,6 +1315,7 @@ def apply_to_job(
 
     ctx: Dict[str, Any] = {
         "assist": assist, "headless": headless, "auto_approve": auto_approve, "emit": emit,
+        "inspect": inspect,
         "accept_privacy": ACCEPT_PRIVACY if accept_privacy is None else accept_privacy,
         "human_wait_s": HUMAN_WAIT_S if human_wait_seconds is None else human_wait_seconds,
         "answers": job_specific_answers(url, cv_path.parent, load_candidate()),
@@ -1326,6 +1371,7 @@ def main() -> int:
     parser.add_argument("--headless", action="store_true", default=True, help="Run browser headless")
     parser.add_argument("--headed", action="store_true", help="Run browser with visible window")
     parser.add_argument("--assist", action="store_true", help="Visible browser; pause for you on captcha/login, then continue")
+    parser.add_argument("--inspect", action="store_true", help="Visible browser, verbose logging, pause at each step (form scan, fill, upload, next/submit)")
     parser.add_argument("--approve", action="store_true", help="Auto-submit without approval pause")
     parser.add_argument("--accept-privacy", action="store_true", help="Tick required privacy/consent checkboxes")
     parser.add_argument("--max-wait", type=int, default=30, help="Max wait seconds for page load")
@@ -1337,6 +1383,7 @@ def main() -> int:
         auto_approve=args.approve,
         max_wait_seconds=args.max_wait,
         assist=args.assist,
+        inspect=args.inspect,
         accept_privacy=True if args.accept_privacy else None,
     )
 

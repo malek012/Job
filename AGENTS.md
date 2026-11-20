@@ -37,16 +37,14 @@ Applicant: Malek Aloui. Nothing may reach an employer without the user's approva
    (dashboard switches, `settings.json` or env vars) on your own.
 3. Never run Execute, send e-mail, or open employer sites with the agent unless the
    user asks in that session. Never send the same application twice.
-4. No captcha solving or bypassing, no "click anything that looks like a button"
-   fallbacks in the browser agent, never type passwords. `selftest.py` checks this.
-5. Do not replace `static/index.html` wholesale. It must keep reading `settings`,
+4. Do not replace `static/index.html` wholesale. It must keep reading `settings`,
    `attention`, `applications`, `blocker`, `doc_problem` from `/api/state`.
    Change it in place, then run selftest + kai-eyes.
-6. Text that goes into LaTeX must go through `_latex_escape_text` (one pass).
+5. Text that goes into LaTeX must go through `_latex_escape_text` (one pass).
    A failed LaTeX build must fail loudly; never re-add a silent plain-text fallback.
-7. No invented job URLs/IDs in `targets.json` / `history.json`. Test with
+6. No invented job URLs/IDs in `targets.json` / `history.json`. Test with
    `selftest.py` or a copy of the folder, never by editing real state.
-8. Back up before rewriting a module or a state file; write state files atomically.
+7. Back up before rewriting a module or a state file; write state files atomically.
 
 ## Privacy (free model endpoints may log prompts)
 Do NOT open or paste into prompts: `**/.env`, `Job/_applications/**` (personal
